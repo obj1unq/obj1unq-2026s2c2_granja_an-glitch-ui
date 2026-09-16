@@ -1,0 +1,9 @@
+import wollok.game.*
+import granja.*
+describe "test de la granja" {
+
+
+    test "personaje" {
+        assert.that(true)
+    }
+}

@@ -1,0 +1,17 @@
+import wollok.game.*
+import personaje.*
+import cultivos.*
+
+program lagranja {
+	//  CONFIG	
+	game.title("La granja")
+	game.height(10)
+	game.width(10)
+	game.ground("fondo.png")
+
+ 	game.addVisualCharacter(personaje)
+ 	
+
+ 	//  COMIENZA
+	game.start()
+}
