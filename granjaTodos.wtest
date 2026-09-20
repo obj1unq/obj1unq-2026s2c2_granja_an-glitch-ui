@@ -1,0 +1,41 @@
+import wollok.game.*
+import granja.*
+import personaje.*
+import cultivos.*
+import mercado.*
+
+
+
+describe "test de la granja" {
+    test "cambio de personaje" {
+        assert.equals("f-player-normal.png", personaje.image())
+        personaje.cambiarGenero()
+        assert.equals("m-player-normal.png", personaje.image())
+    }
+
+    test "plantacion correcta e incorrecta" {
+        const juanita = personaje
+
+        granja.plantar(maiz, juanita.position())
+        assert.that(granja.hayCultivo(juanita.position()))
+
+        assert.throwsException({ granja.plantar(trigo, juanita.position()) })
+    }
+
+    test "plantacion de tomaco y trigo" {
+        personaje.position(game.at(5,5))
+
+        personaje.plantar(tomaco)
+        assert.equals(game.at(5,5), tomaco.position())
+        assert.equals(#{tomaco}, granja.cultivos())
+
+        assert.throwsException({ personaje.plantar(trigo) })
+
+        personaje.position(game.at(6,6))
+        assert.throwsException({ personaje.plantar(tomaco) })
+
+        personaje.plantar(trigo)
+        assert.equals(game.at(6,6), trigo.position())
+        assert.equals(#{tomaco, trigo}, granja.cultivos())
+    }
+}
