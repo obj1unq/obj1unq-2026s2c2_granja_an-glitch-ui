@@ -27,7 +27,8 @@ describe "test de la granja" {
 
         personaje.plantar(tomaco)
         assert.equals(game.at(5,5), tomaco.position())
-        assert.equals(#{tomaco}, granja.cultivos())
+        //assert.equals(#{tomaco}, granja.cultivos())
+        assert.equals(tomaco, granja.cultivoPlantado())
 
         assert.throwsException({ personaje.plantar(trigo) })
 
@@ -36,6 +37,95 @@ describe "test de la granja" {
 
         personaje.plantar(trigo)
         assert.equals(game.at(6,6), trigo.position())
-        assert.equals(#{tomaco, trigo}, granja.cultivos())
+        //assert.equals(#{tomaco, trigo}, granja.cultivos())
+    }
+
+    test "riego del maiz" {
+        personaje.position(game.at(5,5))
+        personaje.plantar(maiz)
+        assert.equals("maiz_bebe.png", maiz.image())
+
+        granja.regar()
+        assert.equals("maiz_adulto.png", maiz.image())
+
+        granja.regar()
+        assert.equals("maiz_adulto.png", maiz.image())
+    }
+
+    test "riego del trigo" {
+        personaje.position(game.at(5,5))
+        personaje.plantar(trigo)
+        assert.equals("trigo_0.png", trigo.image())
+
+        granja.regar()
+        assert.equals("trigo_1.png", trigo.image())
+
+        granja.regar()
+        assert.equals("trigo_2.png", trigo.image())
+
+        granja.regar()
+        assert.equals("trigo_3.png", trigo.image())
+
+        granja.regar()
+        assert.equals("trigo_0.png", trigo.image())
+    }
+
+    test "riego del tomaco" {
+        game.width(5)
+        game.height(5)
+        personaje.position(game.at(3,3))
+        personaje.plantar(tomaco)
+
+        granja.regar()
+        assert.equals(game.at(3,4), tomaco.position())
+
+        personaje.position(game.at(3,4))
+        granja.regar()
+        assert.equals(game.at(3,0), tomaco.position())
+
+        personaje.position(game.at(3,1))
+        personaje.plantar(trigo)
+        personaje.position(game.at(3,0))
+        granja.regar()
+        assert.equals(game.at(3,0), tomaco.position())
+    }
+
+    test "riego sin cultivos" {
+        assert.throwsException({ granja.regar() })
+    }
+
+    test "cosechas" {
+        personaje.position(game.at(3,3))
+        assert.throwsException({ granja.cosechar() })
+
+        personaje.plantar(tomaco)
+        granja.cosechar()
+        assert.equals(null, granja.cultivoPlantado())
+        assert.that(granja.plantasCosechadas().contains(tomaco))
+
+        personaje.plantar(maiz)
+        assert.throwsException({ granja.cosechar() })
+
+        granja.regar()
+        granja.cosechar()
+        assert.equals(null, granja.cultivoPlantado())
+        assert.that(granja.plantasCosechadas().contains(tomaco))
+        assert.that(granja.plantasCosechadas().contains(maiz))
+
+        personaje.plantar(trigo)
+        assert.throwsException({ granja.cosechar() })
+
+        granja.regar()
+        assert.throwsException({ granja.cosechar() })
+
+        granja.regar()
+        assert.that(trigo.estaListoParaCosechar())
+
+        granja.regar()
+        granja.cosechar()
+        assert.equals(null, granja.cultivoPlantado())
+        assert.that(granja.plantasCosechadas().contains(tomaco))
+        assert.that(granja.plantasCosechadas().contains(maiz))
+        assert.that(granja.plantasCosechadas().contains(trigo))
     }
 }

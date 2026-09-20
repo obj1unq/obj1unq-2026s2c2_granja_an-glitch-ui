@@ -19,6 +19,8 @@ program laGranja {
 	keyboard.m().onPressDo{granja.plantar(maiz, personaje.position())}
 	keyboard.t().onPressDo{granja.plantar(trigo, personaje.position())}
 	keyboard.o().onPressDo{granja.plantar(tomaco, personaje.position())}
+	keyboard.r().onPressDo{granja.regar()}
+	keyboard.c().onPressDo{granja.cosechar()}
 
  	//  COMIENZA
 	game.start()
