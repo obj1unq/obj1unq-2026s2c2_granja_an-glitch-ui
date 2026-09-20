@@ -1,16 +1,26 @@
 import wollok.game.*
 import personaje.*
+import granja.*
 import cultivos.*
 
-program lagranja {
+
+program laGranja {
 	//  CONFIG	
 	game.title("La granja")
 	game.height(10)
 	game.width(10)
 	game.ground("fondo.png")
 
+	// AÑADIMIENTO DE COSAS
  	game.addVisualCharacter(personaje)
- 	
+
+	// TECLAS
+ 	keyboard.g().onPressDo{personaje.cambiarGenero()}
+	keyboard.m().onPressDo{granja.plantar(maiz, personaje.position())}
+	keyboard.t().onPressDo{granja.plantar(trigo, personaje.position())}
+	keyboard.o().onPressDo{granja.plantar(tomaco, personaje.position())}
+	keyboard.r().onPressDo{granja.regar()}
+	keyboard.c().onPressDo{granja.cosechar()}
 
  	//  COMIENZA
 	game.start()
