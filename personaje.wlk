@@ -1,11 +1,14 @@
 import wollok.game.*
 import granja.*
+import direcciones.*
+
 
 
 object personaje {
 	var property genero = femenino
 	var property position = game.center()
 	const propiedad = granja
+	var property billetera = 0
 
 
 	method  image() = genero.prefijo() + "-player-" + self.estado() + ".png"
@@ -26,7 +29,15 @@ object personaje {
 		//propiedad.plantar(cultivo, self.position())
 		propiedad.plantar(cultivo, position)
 	} 
-	
+
+	method mover(dir) {
+		//self.validarMoverA(dir)
+		dir.siguiente(position)
+	}
+
+	method vender(valor) {
+		billetera += valor
+	}
 }
 
 object femenino{
@@ -37,6 +48,7 @@ object femenino{
 		return masculino
 	}
 }
+
 object masculino{
 	method prefijo() {
 		return "m"

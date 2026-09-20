@@ -4,59 +4,64 @@ import granja.*
 
 object maiz {
     var property position = game.center()
-    var property estado = "bebe"
+    var property etapa = "bebe"
 
 
-    method image() = "maiz_"+estado+".png"
+    method image() = "maiz_"+etapa+".png"
 
     method efectoPorRiego() {
-        estado = "adulto"
+        etapa = "adulto"
     }
 
     method efectoCosecha() {
-        if(estado == "adulto"){
+        if(etapa == "adulto"){
             game.removeVisual(self)
         }
     }
 
-    method estaListoParaCosechar() = estado == "adulto"
+    method estaListoParaCosechar() = etapa == "adulto"
+
+    method valor() = 150
 }
 
 object trigo {
     var property position = game.center()
-    var property estado = "0"
+    var property etapa = "0"
 
 
-    method image() = "trigo_"+estado+".png"
+    method image() = "trigo_"+etapa+".png"
 
     method efectoPorRiego() {
-        estado = if (estado == "0"){
+        etapa = if (etapa == "0"){
             "1"
-            } else if (estado == "1"){
+            } else if (etapa == "1"){
                     "2"
-            } else if (estado == "2"){
+            } else if (etapa == "2"){
                 "3"
             } else {"0"}
     }
 
     method efectoCosecha() {
-        if(estado == "2" || estado == "3"){
+        //if(etapa.toNumber() == 2 || etapa.toNumber() == 3){
+        if(etapa == "2" || etapa == "3"){
             game.removeVisual(self)
         }
     }
 
-    method estaListoParaCosechar() = estado == "2" or estado == "3"
+    method estaListoParaCosechar() = etapa == "2" or etapa == "3"
+
+    method valor() = (etapa.toNumber() - 1) * 100
 }
 
 object tomaco {
     var property position = game.center()
-    var property estado = "_baby"
+    var property etapa = "_baby"
 
 
-    method image() = "tomaco"+estado+".png"
+    method image() = "tomaco"+etapa+".png"
 
     method efectoPorRiego() {
-        estado = ""
+        etapa = ""
         //self.validarMovimiento()
         self.mover()
     }
@@ -82,4 +87,6 @@ object tomaco {
     method validarCosecha() {
         
     }
+
+    method valor() = 80
 }

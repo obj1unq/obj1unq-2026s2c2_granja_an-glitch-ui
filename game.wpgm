@@ -2,6 +2,10 @@ import wollok.game.*
 import personaje.*
 import granja.*
 import cultivos.*
+import direcciones.*
+import mercado.*
+
+
 
 
 program laGranja {
@@ -13,6 +17,10 @@ program laGranja {
 
 	// AÑADIMIENTO DE COSAS
  	game.addVisualCharacter(personaje)
+	game.addVisual(mercado)
+
+	// ACCIONES
+	//game.onCollideDo(personaje, {elem => elem.efectoPorColision()})
 
 	// TECLAS
  	keyboard.g().onPressDo{personaje.cambiarGenero()}
@@ -21,6 +29,13 @@ program laGranja {
 	keyboard.o().onPressDo{granja.plantar(tomaco, personaje.position())}
 	keyboard.r().onPressDo{granja.regar()}
 	keyboard.c().onPressDo{granja.cosechar()}
+	keyboard.space().onPressDo{game.say(personaje, "Tengo "+granja.plantasCosechadas().count()+" plantas para vender por $" +granja.totalAObtenerPorVenta()+ " monedas.")}
+	keyboard.v().onPressDo{granja.vender()}
+
+	keyboard.up().onPressDo{personaje.mover(arriba)} // :P
+	keyboard.down().onPressDo{personaje.mover(abajo)}
+	keyboard.left().onPressDo{personaje.mover(izquierda)}
+	keyboard.right().onPressDo{personaje.mover(derecha)}
 
  	//  COMIENZA
 	game.start()

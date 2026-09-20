@@ -12,6 +12,9 @@ object granja {
 	//var encargado = personaje
 
 
+
+	method encargado() = personaje
+
 	method plantar(cultivo, position) {
 		self.validarPlantar(cultivo, position)
 		cultivo.position(position)
@@ -25,8 +28,9 @@ object granja {
 		//	self.error("No se puede plantar")
 		//}
 		//if(!self.hayCultivo(position)){
-		if(self.hayCultivo(position) or cultivoPlantado == cultivo){
-			self.error("No se puede plantar...")
+		//if(self.hayCultivo(position) or cultivoPlantado == cultivo){
+		if(self.hayCultivo(position) or self.hayMercadoAca()){
+			self.error("No se puede plantar acá...")
 		}
 	}
 
@@ -66,4 +70,20 @@ object granja {
 			self.error("No es posible hacer la cosecha...")
 		}
 	}
+
+	method vender() {
+		self.validarVender()
+		self.encargado().vender(self.totalAObtenerPorVenta())
+		plantasCosechadas.clear()
+	}
+
+	method validarVender() {
+		if (!self.hayMercadoAca()){
+			self.error("No hay un mercado cerca...")
+		}
+	}
+
+	method hayMercadoAca() = game.getObjectsIn(self.encargado().position()).contains(mercado)
+
+	method totalAObtenerPorVenta() = (plantasCosechadas.map{p=>p.valor()}).sum()
 }
