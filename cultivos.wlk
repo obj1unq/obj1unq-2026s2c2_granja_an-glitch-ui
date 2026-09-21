@@ -14,7 +14,7 @@ object maiz {
     }
 
     method efectoCosecha() {
-        if(etapa == "adulto"){
+        if(self.estaListoParaCosechar()){
             game.removeVisual(self)
         }
     }
@@ -43,7 +43,7 @@ object trigo {
 
     method efectoCosecha() {
         //if(etapa.toNumber() == 2 || etapa.toNumber() == 3){
-        if(etapa == "2" || etapa == "3"){
+        if(self.estaListoParaCosechar()){
             game.removeVisual(self)
         }
     }
@@ -78,15 +78,12 @@ object tomaco {
     }
 
     method efectoCosecha() {
-        self.validarCosecha()
-        game.removeVisual(self)
+        if(self.estaListoParaCosechar()){
+            game.removeVisual(self)
+        }
     }
 
     method estaListoParaCosechar() = true
-
-    method validarCosecha() {
-        
-    }
 
     method valor() = 80
 }

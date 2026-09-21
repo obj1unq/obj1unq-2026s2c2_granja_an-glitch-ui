@@ -29,7 +29,7 @@ program laGranja {
 	keyboard.o().onPressDo{granja.plantar(tomaco, personaje.position())}
 	keyboard.r().onPressDo{granja.regar()}
 	keyboard.c().onPressDo{granja.cosechar()}
-	keyboard.space().onPressDo{game.say(personaje, "Tengo "+granja.plantasCosechadas().count()+" plantas para vender por $" +granja.totalAObtenerPorVenta()+ " monedas.")}
+	keyboard.space().onPressDo{game.say(personaje, "Tengo "+granja.plantasCosechadas().count().toString()+" plantas para vender por $" +granja.totalAObtenerPorVenta()+ " monedas.")}
 	keyboard.v().onPressDo{granja.vender()}
 
 	keyboard.up().onPressDo{personaje.mover(arriba)} // :P

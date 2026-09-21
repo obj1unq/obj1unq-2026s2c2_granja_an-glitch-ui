@@ -65,11 +65,13 @@ object granja {
 	}
 
 	method validarCosecha() {
-		//if(cultivoPlantado == null){
-		if(cultivoPlantado == null or not cultivoPlantado.estaListoParaCosechar()){
+		//if(cultivoPlantado == null or not cultivoPlantado.estaListoParaCosechar()){
+		if(self.elCultivoAcaEstaParaCosechar()){
 			self.error("No es posible hacer la cosecha...")
 		}
 	}
+
+	method elCultivoAcaEstaParaCosechar() = cultivoPlantado != null and cultivoPlantado.estaListoParaCosechar()
 
 	method vender() {
 		self.validarVender()
