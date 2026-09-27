@@ -1,17 +1,57 @@
 import wollok.game.*
 import personaje.*
+import granja.*
 import cultivos.*
+import direcciones.*
+import mercado.*
 
-program lagranja {
+
+
+
+program laGranja {
 	//  CONFIG	
 	game.title("La granja")
 	game.height(10)
 	game.width(10)
 	game.ground("fondo.png")
 
+	// AÑADIMIENTO DE COSAS
  	game.addVisualCharacter(personaje)
- 	
+	game.addVisual(mercado)
+
+	// ACCIONES
+	//game.onCollideDo(personaje, {elem => elem.efectoPorColision()})
+
+	// TECLAS
+ 	keyboard.g().onPressDo{personaje.cambiarGenero()}
+	
+		//const maiz = new Planta()
+	keyboard.m().onPressDo({personaje.plantar(new Maiz(position = personaje.position))})
+		//const trigo = new Planta()
+	keyboard.t().onPressDo({personaje.plantar(new Trigo(position = personaje.position))})
+		//const tomaco = new Planta()
+	keyboard.o().onPressDo({personaje.plantar(new Tomaco(position = personaje.position))})
+
+	keyboard.r().onPressDo{granja.regar()}
+	keyboard.c().onPressDo{granja.cosechar()}
+	keyboard.space().onPressDo{game.say(personaje, "Tengo "+granja.plantasCosechadas().count().toString()+" plantas para vender por $" +granja.totalAObtenerPorVenta()+ " monedas.")}
+	keyboard.v().onPressDo{granja.vender()}
+
+	keyboard.up().onPressDo{personaje.mover(arriba)} // :P
+	keyboard.down().onPressDo{personaje.mover(abajo)}
+	keyboard.left().onPressDo{personaje.mover(izquierda)}
+	keyboard.right().onPressDo{personaje.mover(derecha)}
 
  	//  COMIENZA
 	game.start()
 }
+
+
+/*
+Se ha presentado la clase como un concepto que permite generar objetos con el mismo comportamiento y la misma estructura, más allá de que cada instancia 
+guarde en su estado interno su propio juego de valores. Todo objeto que es generado como instancia de clase pertenece a la misma durante todo su ciclo de
+vida. A su vez, una clase cumple diferentes tipos, en base a los mensajes que define. Cuando dos objetos de diferente clase comparten el mismo tipo, son 
+polimórficos en ese contexto: un observador les envía mensajes a los dos y no percibe cambios, aunque cada clase define un método propio. Ahora tenemos 
+dos maneras distintas de definir objetos de dominio: los objetos autodefinidos que se declaran  con la estructura object{} y las instancias de clase, 
+cuyo comportamiento se define en una estructura class{} y se crean con la palabra reservada new()
+*/
