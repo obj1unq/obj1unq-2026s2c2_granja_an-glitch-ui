@@ -16,32 +16,38 @@ describe "test de la granja" {
     test "plantacion correcta e incorrecta" {
         const juanita = personaje
 
+        const maiz = new Maiz()
         granja.plantar(maiz, juanita.position())
         assert.that(granja.hayCultivo(juanita.position()))
 
+        const trigo = new Trigo()
         assert.throwsException({ granja.plantar(trigo, juanita.position()) })
     }
 
     test "plantacion de tomaco y trigo" {
-        personaje.position(game.at(5,5))
+        const juana = personaje
+        juana.position(game.at(5,5))
 
-        personaje.plantar(tomaco)
+        const tomaco = new Tomaco()
+        juana.plantar(tomaco)
         assert.equals(game.at(5,5), tomaco.position())
         //assert.equals(#{tomaco}, granja.cultivos())
         assert.equals(tomaco, granja.cultivoPlantado())
 
-        assert.throwsException({ personaje.plantar(trigo) })
+        const trigo = new Trigo()
+        assert.throwsException({ juana.plantar(trigo) })
 
-        personaje.position(game.at(6,6))
-        assert.throwsException({ personaje.plantar(tomaco) })
+        juana.position(game.at(6,6))
+        assert.throwsException({ juana.plantar(tomaco) })
 
-        personaje.plantar(trigo)
+        juana.plantar(trigo)
         assert.equals(game.at(6,6), trigo.position())
         //assert.equals(#{tomaco, trigo}, granja.cultivos())
     }
 
     test "riego del maiz" {
         personaje.position(game.at(5,5))
+        const maiz = new Maiz()
         personaje.plantar(maiz)
         assert.equals("maiz_bebe.png", maiz.image())
 
@@ -54,6 +60,7 @@ describe "test de la granja" {
 
     test "riego del trigo" {
         personaje.position(game.at(5,5))
+        const trigo = new Trigo()
         personaje.plantar(trigo)
         assert.equals("trigo_0.png", trigo.image())
 
@@ -74,6 +81,7 @@ describe "test de la granja" {
         game.width(5)
         game.height(5)
         personaje.position(game.at(3,3))
+        const tomaco = new Tomaco()
         personaje.plantar(tomaco)
 
         granja.regar()
@@ -84,6 +92,7 @@ describe "test de la granja" {
         assert.equals(game.at(3,0), tomaco.position())
 
         personaje.position(game.at(3,1))
+        const trigo = new Trigo()
         personaje.plantar(trigo)
         personaje.position(game.at(3,0))
         granja.regar()
@@ -98,11 +107,13 @@ describe "test de la granja" {
         personaje.position(game.at(3,3))
         assert.throwsException({ granja.cosechar() })
 
+        const tomaco = new Tomaco()
         personaje.plantar(tomaco)
         granja.cosechar()
         assert.equals(null, granja.cultivoPlantado())
         assert.that(granja.plantasCosechadas().contains(tomaco))
 
+        const maiz = new Maiz()
         personaje.plantar(maiz)
         assert.throwsException({ granja.cosechar() })
 
@@ -112,6 +123,7 @@ describe "test de la granja" {
         assert.that(granja.plantasCosechadas().contains(tomaco))
         assert.that(granja.plantasCosechadas().contains(maiz))
 
+        const trigo = new Trigo()
         personaje.plantar(trigo)
         assert.throwsException({ granja.cosechar() })
 

@@ -2,7 +2,8 @@ import wollok.game.*
 import granja.*
 
 
-object maiz {
+
+class Maiz {
     var property position = game.center()
     var property etapa = "bebe"
 
@@ -24,7 +25,7 @@ object maiz {
     method valor() = 150
 }
 
-object trigo {
+class Trigo {
     var property position = game.center()
     var property etapa = "0"
 
@@ -53,7 +54,7 @@ object trigo {
     method valor() = (etapa.toNumber() - 1) * 100
 }
 
-object tomaco {
+class Tomaco {
     var property position = game.center()
     var property etapa = "_baby"
 
